@@ -36,6 +36,7 @@ public class ExerciseDaoTest {
         Exercise exercise = Exercise.builder()
                 .name("Exercise 2")
                 .description("Exercise")
+                .assessment(12)
                 .topicId(2)
                 .created(new Date())
                 .build();
@@ -49,6 +50,7 @@ public class ExerciseDaoTest {
                 .id(1)
                 .name("Exercise 1")
                 .description("Exercise")
+                .assessment(11)
                 .topicId(2)
                 .updated(new Date())
                 .build();

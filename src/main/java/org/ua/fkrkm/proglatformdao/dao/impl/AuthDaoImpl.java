@@ -24,12 +24,18 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
         setRowMapper(new AuthMapper());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Auth> getByAccessToken(String accessToken) {
         String sql = "SELECT * FROM " + this.tableName + " WHERE access_token = :accessToken;";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("accessToken", accessToken), new AuthMapper());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteByAccessToken(String accessToken) {
         String sql = "DELETE FROM " + this.tableName + " WHERE access_token = :accessToken;";

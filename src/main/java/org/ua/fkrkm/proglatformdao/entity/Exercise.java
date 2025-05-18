@@ -15,6 +15,8 @@ public class Exercise {
     private String name;
     // Опис завдання
     private String description;
+    // Оцінка
+    private Integer assessment;
     // ID теми
     private Integer topicId;
     // Час створення

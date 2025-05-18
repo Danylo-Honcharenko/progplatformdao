@@ -18,9 +18,9 @@ public class ExerciseDaoImpl extends ParentDaoImpl<Exercise> implements Exercise
     public ExerciseDaoImpl(DataSource dataSource) {
         super(dataSource);
         setTableName("exercises");
-        setParam(":name, :description, :topicId, :created");
-        setValues("name, description, topic_id, created");
-        setValuesForUpdate("name = :name, description = :description, topic_id = :topicId, updated = :updated");
+        setParam(":name, :description, :assessment, :topicId, :created");
+        setValues("name, description, assessment, topic_id, created");
+        setValuesForUpdate("name = :name, description = :description, assessment = :assessment, topic_id = :topicId, updated = :updated");
         setRowMapper(new ExerciseMapper());
     }
 }
