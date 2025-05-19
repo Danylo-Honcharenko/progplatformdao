@@ -2,6 +2,7 @@ package org.ua.fkrkm.proglatformdao.entity.view;
 
 import lombok.Builder;
 import lombok.Data;
+import org.ua.fkrkm.proglatformdao.entity.Exercise;
 import org.ua.fkrkm.proglatformdao.entityMongo.view.TestView;
 
 import java.util.Date;
@@ -21,6 +22,8 @@ public class TopicView {
     private Boolean done;
     // Тести
     private List<TestView> tests;
+    // Завдання
+    private Exercise exercise;
     // Час створення
     private Date created;
     // Час оновлення
