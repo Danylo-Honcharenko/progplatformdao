@@ -27,7 +27,7 @@ public class TestResultDaoImpl extends ParentDaoImpl<TestResult> implements Test
 
     @Override
     public List<TestResult> getTestResultsByUserId(Integer userId) {
-        String sql = "SELECT * FROM " + this.tableName + " WHERE user_id = :userId";
+        String sql = "SELECT * FROM " + this.tableName + " WHERE user_id = :userId ORDER BY id DESC";
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("userId", userId);
         return this.namedParameterJdbcTemplate.query(sql, sqlParameterSource, new TestResultMapper());

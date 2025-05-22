@@ -60,6 +60,6 @@ public class TestResultImplTest {
     @Test
     public void getTestResultByUserIdTest() {
         List<TestResult> results = testResultDao.getTestResultsByUserId(1);
-        assertEquals(1, results.get(0).getId());
+        assertEquals(1, results.get(results.size() - 1).getId());
     }
 }
