@@ -18,7 +18,7 @@ public class TestResultMapper implements RowMapper<TestResult> {
                 .assessment(rs.getInt("assessment"))
                 .correct(rs.getString("correct"))
                 .incorrect(rs.getString("incorrect"))
-                .created(rs.getDate("created"))
+                .created(rs.getTimestamp("created"))
                 .build();
     }
 }
