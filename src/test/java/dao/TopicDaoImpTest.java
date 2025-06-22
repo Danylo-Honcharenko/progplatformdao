@@ -78,4 +78,10 @@ public class TopicDaoImpTest {
         List<Topic> topics = topicDao.findAllTopicsByModuleId(1);
         assertFalse(topics.isEmpty());
     }
+
+    @Test
+    public void findAllTopicsByModuleIdListTest() {
+        List<Topic> allTopicsByModuleIdList = topicDao.findAllTopicsByModuleIdList(List.of(1, 2));
+        assertFalse(allTopicsByModuleIdList.isEmpty());
+    }
 }

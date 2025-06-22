@@ -1,5 +1,6 @@
 package org.ua.fkrkm.proglatformdao.dao.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.ua.fkrkm.proglatformdao.dao.TopicDaoI;
 import org.ua.fkrkm.proglatformdao.entity.Topic;
@@ -31,7 +32,16 @@ public class TopicDaoImpl extends ParentDaoImpl<Topic> implements TopicDaoI {
      */
     @Override
     public List<Topic> findAllTopicsByModuleId(int moduleId) {
-        String sql = "SELECT * FROM " + this.tableName + " WHERE module_id = :moduleId;";
+        String sql = "SELECT * FROM " + this.tableName + " WHERE module_id = :moduleId ORDER BY id;";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("moduleId", moduleId), new TopicMapper());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Topic> findAllTopicsByModuleIdList(List<Integer> moduleIds) {
+        String sql = "SELECT * FROM " + this.tableName + " WHERE module_id IN (%s) ORDER BY module_id;";
+        return this.jdbcTemplate.query(String.format(sql, StringUtils.join(moduleIds, ",")), new TopicMapper());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.ua.fkrkm.proglatformdao.dao.ModuleStatDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.ModuleStatImpl;
 import org.ua.fkrkm.proglatformdao.entity.ModuleStat;
+import org.ua.fkrkm.proglatformdao.entity.view.ModuleStateView;
 
 import javax.sql.DataSource;
 import java.io.FileReader;
@@ -74,5 +75,11 @@ public class ModuleStatImplTest {
     public void findModuleCompleteByUserIdTest() {
         List<ModuleStat> moduleStats = moduleCompleteDao.findModuleStatByUserId(1);
         assertFalse(moduleStats.isEmpty());
+    }
+
+    @Test
+    public void findModulesStatByUserIdTest() {
+        List<ModuleStateView> modulesStatByUserId = moduleCompleteDao.findModulesStatByUserId(1);
+        assertFalse(modulesStatByUserId.isEmpty());
     }
 }
