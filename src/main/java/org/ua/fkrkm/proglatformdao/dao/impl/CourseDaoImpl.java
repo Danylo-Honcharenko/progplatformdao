@@ -84,10 +84,10 @@ public class CourseDaoImpl extends ParentDaoImpl<Course> implements CourseDaoI {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getCoursesIdByUserId(int userId) {
+    public List<Course> getCoursesIdByUserId(int userId) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("userId", userId);
-        String sql = "SELECT course_id FROM user_course WHERE user_id = :userId;";
-        return this.namedParameterJdbcTemplate.queryForList(sql, sqlParameterSource, Integer.class);
+        String sql = "SELECT * FROM courses WHERE id IN (SELECT course_id FROM user_course WHERE user_id = :userId) ORDER BY id;";
+        return this.namedParameterJdbcTemplate.query(sql, sqlParameterSource, new CourseMapper());
     }
 }

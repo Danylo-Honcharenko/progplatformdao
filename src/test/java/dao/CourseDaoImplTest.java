@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.ua.fkrkm.proglatformdao.dao.CourseDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.CourseDaoImpl;
+import org.ua.fkrkm.proglatformdao.entity.Course;
 
 import javax.sql.DataSource;
 import java.io.FileReader;
@@ -42,7 +43,7 @@ public class CourseDaoImplTest {
 
     @Test
     public void getCoursesIdByUserIdTest() {
-        List<Integer> coursesId = courseDao.getCoursesIdByUserId(1);
-        assertFalse(coursesId.isEmpty());
+        List<Course> courses = courseDao.getCoursesIdByUserId(1);
+        assertFalse(courses.isEmpty());
     }
 }

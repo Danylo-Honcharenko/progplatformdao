@@ -32,9 +32,16 @@ public interface TestDaoI {
      * Отримати тест по ID теми
      *
      * @param topicId ID теми
-     * @return Test запис з бази
+     * @return List<Test> запис з бази
      */
     List<Test> getByTopicId(Integer topicId);
+    /**
+     * Отримати тест по списку ID тем
+     *
+     * @param topicIds список ID тем
+     * @return List<Test> запис з бази
+     */
+    List<Test> getByTopicIds(List<Integer> topicIds);
     /**
      * Отримати всі документи з бази
      *

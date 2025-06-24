@@ -36,10 +36,10 @@ public interface CourseDaoI extends ParentDaoI<Course> {
      */
     List<Integer> getCourseUsersIdByCourseId(int courseId);
     /**
-     * Отримати ID всіх курсів користувача
+     * Отримати курси користувача
      *
      * @param userId ID користувача
-     * @return List<Integer> ID курсів
+     * @return List<Course> список курсів
      */
-    List<Integer> getCoursesIdByUserId(int userId);
+    List<Course> getCoursesIdByUserId(int userId);
 }

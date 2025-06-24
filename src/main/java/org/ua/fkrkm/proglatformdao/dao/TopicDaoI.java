@@ -15,4 +15,11 @@ public interface TopicDaoI extends ParentDaoI<Topic> {
      * @return List<Topic> список тем
      */
     List<Topic> findAllTopicsByModuleId(int moduleId);
+    /**
+     * Знайти всі теми модуля по списку модулів
+     *
+     * @param moduleIds ID модулів
+     * @return List<Topic> список тем
+     */
+    List<Topic> findAllTopicsByModuleIdList(List<Integer> moduleIds);
 }

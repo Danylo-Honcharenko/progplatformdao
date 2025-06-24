@@ -82,6 +82,15 @@ public class TestDaoImpl implements TestDaoI {
      * {@inheritDoc}
      */
     @Override
+    public List<Test> getByTopicIds(List<Integer> topicIds) {
+        Query query = new Query(Criteria.where("topicId").in(topicIds));
+        return mongoTemplate.find(query, Test.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Test> getAll() {
         return mongoTemplate.findAll(Test.class);
     }
