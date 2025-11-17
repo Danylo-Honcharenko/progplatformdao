@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.TopicDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.TopicDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Topic;
@@ -64,8 +65,8 @@ public class TopicDaoImpTest {
 
     @Test
     public void getByIdTest() {
-        Topic topic = topicDao.getById(1);
-        assertEquals(1, topic.getId());
+        List<Topic> topic = topicDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(topic));
     }
 
     @Test

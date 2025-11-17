@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.UserDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.UserDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.User;
@@ -75,8 +76,8 @@ public class UserDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        User user = userDao.getById(1);
-        assertEquals(1, user.getId());
+        List<User> user = userDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(user));
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.ModuleDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.ModuleDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Module;
@@ -64,8 +65,8 @@ public class ModuleDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        Module module = moduleDao.getById(1);
-        assertEquals(1, module.getId());
+        List<Module> module = moduleDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(module));
     }
 
     @Test

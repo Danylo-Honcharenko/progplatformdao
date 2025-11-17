@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.TestResultDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.TestResultDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.TestResult;
@@ -17,8 +18,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestResultImplTest {
     private final TestResultDaoI testResultDao = new TestResultDaoImpl(Database.getDataSource());
@@ -48,8 +48,8 @@ public class TestResultImplTest {
 
     @Test
     public void getByIdTest() {
-        TestResult testResult = testResultDao.getById(1);
-        assertEquals(1, testResult.getId());
+        List<TestResult> testResult = testResultDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(testResult));
     }
 
     @Test

@@ -85,14 +85,14 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
      * {@inheritDoc}
      */
     @Override
-    public T getById(int id) {
+    public List<T> getById(int id) {
         // Запит
         String sql = "SELECT * FROM " + this.tableName + " WHERE id = :id";
         // Підставляємо параметри в запит
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("id", id);
         // Робимо запит
-        return this.namedParameterJdbcTemplate.queryForObject(sql, sqlParameterSource, rowMapper);
+        return this.namedParameterJdbcTemplate.query(sql, sqlParameterSource, rowMapper);
     }
 
     /**

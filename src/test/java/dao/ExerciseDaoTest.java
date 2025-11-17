@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.ExerciseDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.ExerciseDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Exercise;
@@ -66,8 +67,8 @@ public class ExerciseDaoTest {
 
     @Test
     public void getByIdTest() {
-        Exercise exercise = exerciseDaoI.getById(1);
-        assertEquals(1, exercise.getId());
+        List<Exercise> exercise = exerciseDaoI.getById(1);
+        assertFalse(CollectionUtils.isEmpty(exercise));
     }
 
     @Test

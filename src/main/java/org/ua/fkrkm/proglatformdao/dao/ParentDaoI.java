@@ -26,9 +26,9 @@ public interface ParentDaoI<T> {
      * Отримати запис по ID
      *
      * @param id ID запису
-     * @return T сутність
+     * @return List<T> сутність
      */
-    T getById(int id);
+    List<T> getById(int id);
     /**
      * Отримати всі записи
      *

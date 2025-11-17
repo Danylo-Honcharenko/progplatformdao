@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.AuthDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.AuthDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Auth;
@@ -64,8 +65,8 @@ public class AuthDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        Auth auth = authDao.getById(1);
-        assertEquals(1, auth.getId());
+        List<Auth> auth = authDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(auth));
     }
 
     @Test

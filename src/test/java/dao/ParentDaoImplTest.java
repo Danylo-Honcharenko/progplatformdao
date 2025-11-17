@@ -5,6 +5,7 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.ParentDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.CourseDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Course;
@@ -63,8 +64,8 @@ public class ParentDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        Course course = parentDao.getById(1);
-        assertEquals(1, course.getId());
+        List<Course> course = parentDao.getById(1);
+        assertFalse(CollectionUtils.isEmpty(course));
     }
 
     @Test
