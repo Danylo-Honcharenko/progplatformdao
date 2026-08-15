@@ -39,6 +39,15 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
     @Override
     public void deleteByAccessToken(String accessToken) {
         String sql = "DELETE FROM " + this.tableName + " WHERE access_token = :accessToken;";
-        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("accessToken", accessToken));
+        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("accessToken", accessToken));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAllTokensByUserId(Integer userId) {
+        String sql = "DELETE FROM " + this.tableName + " WHERE user_id = :userId AND expires_in < CURRENT_TIMESTAMP;";
+        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("userId", userId));
     }
 }

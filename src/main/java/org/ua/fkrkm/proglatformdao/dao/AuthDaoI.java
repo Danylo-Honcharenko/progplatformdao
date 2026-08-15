@@ -21,4 +21,10 @@ public interface AuthDaoI extends ParentDaoI<Auth> {
      * @param accessToken токен
      */
     void deleteByAccessToken(String accessToken);
+    /**
+     * Видалення токену по ID користувача
+     *
+     * @param userId ID користувача
+     */
+    void deleteAllTokensByUserId(Integer userId);
 }

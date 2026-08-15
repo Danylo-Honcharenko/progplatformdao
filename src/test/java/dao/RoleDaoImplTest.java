@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.ua.fkrkm.proglatformdao.dao.RoleDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.RoleDaoImpl;
+import org.ua.fkrkm.proglatformdao.entity.Role;
 
 import javax.sql.DataSource;
 import java.io.FileReader;
@@ -32,7 +33,7 @@ public class RoleDaoImplTest {
 
     @Test
     public void findByNameTest() {
-        List<Integer> roleId = roleDao.findIdByName("ROLE_USER");
-        assertFalse(roleId.isEmpty());
+        List<Role> roles = roleDao.findIdByName("ROLE_USER");
+        assertFalse(roles.isEmpty());
     }
 }
