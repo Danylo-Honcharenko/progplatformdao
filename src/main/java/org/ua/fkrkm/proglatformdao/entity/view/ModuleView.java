@@ -18,4 +18,5 @@ public class ModuleView {
     private Boolean active;
     private Date created;
     private Date updated;
+    private List<Integer> pages;
 }

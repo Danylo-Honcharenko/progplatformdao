@@ -8,6 +8,9 @@ import org.ua.fkrkm.proglatformdao.entityMongo.view.TestView;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Відображення теми
+ */
 @Data
 @Builder
 public class TopicView {
@@ -28,4 +31,6 @@ public class TopicView {
     private Date created;
     // Час оновлення
     private Date updated;
+    // Номер сторінки теми
+    private Integer page;
 }
