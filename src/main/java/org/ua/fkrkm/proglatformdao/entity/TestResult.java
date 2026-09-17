@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 public class TestResult extends BaseEntity {
     private String testUuid;
     private Long userId;
-    private Long maxAssessment;
-    private Long assessment;
+    private Integer maxAssessment;
+    private Integer assessment;
     private String correct;
     private String incorrect;
 }

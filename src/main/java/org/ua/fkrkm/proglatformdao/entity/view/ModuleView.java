@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Builder
 public class ModuleView {
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private List<TopicView> topics;

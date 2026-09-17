@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @Builder
 public class UserView {
-    int id;
+    Long id;
     // Імя
     private String firstName;
     // Фамілія

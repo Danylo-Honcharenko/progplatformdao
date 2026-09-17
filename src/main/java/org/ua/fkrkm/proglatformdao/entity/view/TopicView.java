@@ -14,13 +14,13 @@ import java.util.List;
 @Data
 @Builder
 public class TopicView {
-    private Integer id;
+    private Long id;
     // Назва теми
     private String name;
     // Опис теми
     private String description;
     // ID курсу
-    private Integer moduleId;
+    private Long moduleId;
     // Статус виконання теми
     private Boolean done;
     // Тести
