@@ -1,11 +1,11 @@
 package dao;
 
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.ImmutableMongodConfig;
-import de.flapdoodle.embed.mongo.config.MongodConfig;
-import de.flapdoodle.embed.mongo.config.Net;
+import de.flapdoodle.commons.reverse.TransitionWalker;
+import de.flapdoodle.embed.mongo.commands.ServerAddress;
 import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.mongo.transitions.ImmutableMongod;
+import de.flapdoodle.embed.mongo.transitions.Mongod;
+import de.flapdoodle.embed.mongo.transitions.RunningMongodProcess;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -23,24 +23,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestDaoImplTest {
 
     private TestDaoI testDao;
-    private MongodExecutable mongodExecutable;
+    private TransitionWalker.ReachedState<RunningMongodProcess> running;
+    private ServerAddress serverAddress;
 
     @BeforeEach
     public void setup() throws Exception {
-        ImmutableMongodConfig mongodConfig = MongodConfig.builder()
-                .version(Version.Main.PRODUCTION)
-                .net(new Net("localhost", 27017, true))
-                .build();
+        ImmutableMongod mongodbConfig = Mongod.instance();
+        Version.Main version = Version.Main.V8_0;
 
-        MongodStarter starter = MongodStarter.getDefaultInstance();
-        this.mongodExecutable = starter.prepare(mongodConfig);
-        this.mongodExecutable.start();
-        this.testDao = new TestDaoImpl(new SimpleMongoClientDatabaseFactory("mongodb://localhost:27017/test"));
+        this.running = mongodbConfig.start(version);
+        this.serverAddress = this.running.current().getServerAddress();
+
+        this.testDao = new TestDaoImpl(new SimpleMongoClientDatabaseFactory("mongodb://" + serverAddress + "/test"));
     }
 
     @AfterEach
     public void clear() {
-        mongodExecutable.stop();
+        this.serverAddress = null;
+        if (this.running != null) this.running.close();
+        this.running = null;
     }
 
     @Test
@@ -62,12 +63,6 @@ public class TestDaoImplTest {
 
         String uuid = testDao.create(test);
         assertNotNull(uuid);
-    }
-
-    @Test
-    @Disabled
-    public void updateTest() {
-
     }
 
     @Test
