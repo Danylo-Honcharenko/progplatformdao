@@ -11,11 +11,11 @@ public class TestResultMapper implements RowMapper<TestResult> {
     @Override
     public TestResult mapRow(ResultSet rs, int rowNum) throws SQLException {
         return TestResult.builder()
-                .id(rs.getInt("id"))
+                .id(rs.getLong("id"))
                 .testUuid(rs.getString("test_uuid"))
-                .userId(rs.getInt("user_id"))
-                .maxAssessment(rs.getInt("max_assessment"))
-                .assessment(rs.getInt("assessment"))
+                .userId(rs.getLong("user_id"))
+                .maxAssessment(rs.getLong("max_assessment"))
+                .assessment(rs.getLong("assessment"))
                 .correct(rs.getString("correct"))
                 .incorrect(rs.getString("incorrect"))
                 .created(rs.getTimestamp("created"))

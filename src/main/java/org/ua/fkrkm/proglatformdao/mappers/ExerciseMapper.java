@@ -22,10 +22,10 @@ public class ExerciseMapper implements RowMapper<Exercise> {
     @Override
     public Exercise mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Exercise.builder()
-                .id(rs.getInt("id"))
+                .id(rs.getLong("id"))
                 .name(rs.getString("name"))
                 .description(rs.getString("description"))
-                .topicId(rs.getInt("topic_id"))
+                .topicId(rs.getLong("topic_id"))
                 .created(rs.getTimestamp("created"))
                 .updated(rs.getTimestamp("updated"))
                 .build();

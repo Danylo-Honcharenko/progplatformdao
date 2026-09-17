@@ -35,10 +35,10 @@ public class AuthDaoImplTest {
     @Test
     public void createAuth() {
         Auth auth = Auth.builder()
-                .userId(1)
-                .accessToken("123456789")
+                .userId(1L)
                 .created(new Date())
                 .expiresIn(new Date())
+                .revoked(new Date())
                 .build();
 
         assertTrue(authDao.create(auth) > 0);
@@ -47,11 +47,11 @@ public class AuthDaoImplTest {
     @Test
     public void updateTest() {
         Auth auth = Auth.builder()
-                .id(1)
-                .userId(1)
-                .accessToken("$$$$$$$$")
+                .id(1L)
+                .userId(1L)
                 .created(new Date())
                 .expiresIn(new Date())
+                .revoked(new Date())
                 .build();
 
         assertEquals(1, authDao.update(auth));
@@ -65,18 +65,18 @@ public class AuthDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        List<Auth> auth = authDao.getById(1);
+        List<Auth> auth = authDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(auth));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, authDao.delete(2));
+        assertEquals(1, authDao.delete(2L));
     }
 
     @Test
     public void getByAccessTokenTest() {
-        List<Auth> auths = authDao.getByAccessToken("$123456#");
+        List<Auth> auths = authDao.getByUserId(1L);
         assertFalse(auths.isEmpty());
     }
 }

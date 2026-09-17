@@ -47,7 +47,7 @@ public class ParentDaoImplTest {
     @Test
     public void updateTest() {
         Course updated = Course.builder()
-                .id(2)
+                .id(2L)
                 .name("Test Course 2")
                 .description("123456789")
                 .updated(new Date())
@@ -64,12 +64,12 @@ public class ParentDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        List<Course> course = parentDao.getById(1);
+        List<Course> course = parentDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(course));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, parentDao.delete(3));
+        assertEquals(1, parentDao.delete(3L));
     }
 }

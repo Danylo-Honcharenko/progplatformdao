@@ -5,5 +5,5 @@ import org.ua.fkrkm.proglatformdao.entity.TestResult;
 import java.util.List;
 
 public interface TestResultDaoI extends ParentDaoI<TestResult> {
-    List<TestResult> getTestResultsByUserId(Integer userId);
+    List<TestResult> getTestResultsByUserId(Long userId);
 }

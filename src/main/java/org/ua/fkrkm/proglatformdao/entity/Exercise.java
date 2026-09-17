@@ -1,16 +1,16 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
 import lombok.*;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Завдання"
  */
-@Data
-@Builder
-public class Exercise {
-    private Integer id;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class Exercise extends BaseEntity {
     // Назва завдання
     private String name;
     // Опис завдання
@@ -18,9 +18,5 @@ public class Exercise {
     // Оцінка
     private Integer assessment;
     // ID теми
-    private Integer topicId;
-    // Час створення
-    private Date created;
-    // Час оновлення
-    private Date updated;
+    private Long topicId;
 }

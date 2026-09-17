@@ -9,22 +9,22 @@ import java.util.List;
  */
 public interface AuthDaoI extends ParentDaoI<Auth> {
     /**
-     * Отримати аутентифікованого користувача по токену
+     * Отримати аутентифікованого користувача
      *
-     * @param accessToken токен
+     * @param userId ID користувача
      * @return List<Auth> список аутентифікованих користувачів
      */
-    List<Auth> getByAccessToken(String accessToken);
-    /**
-     * Видалити по токену
-     *
-     * @param accessToken токен
-     */
-    void deleteByAccessToken(String accessToken);
+    List<Auth> getByUserId(Long userId);
+//    /**
+//     * Видалити по токену
+//     *
+//     * @param accessToken токен
+//     */
+//    void deleteByAccessToken(String accessToken);
     /**
      * Видалення токену по ID користувача
      *
      * @param userId ID користувача
      */
-    void deleteAllTokensByUserId(Integer userId);
+    void deleteAllTokensByUserId(Long userId);
 }

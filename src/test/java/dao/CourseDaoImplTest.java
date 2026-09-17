@@ -32,18 +32,18 @@ public class CourseDaoImplTest {
 
     @Test
     public void addUserToCourseTest() {
-        courseDao.addUserToCourse(1, 2);
+        courseDao.addUserToCourse(1L, 2L);
     }
 
     @Test
     public void getCourseUsersIdByCourseIdTest() {
-        List<Integer> courseUsersId = courseDao.getCourseUsersIdByCourseId(1);
+        List<Long> courseUsersId = courseDao.getCourseUsersIdByCourseId(1L);
         assertFalse(courseUsersId.isEmpty());
     }
 
     @Test
     public void getCoursesIdByUserIdTest() {
-        List<Course> courses = courseDao.getCoursesIdByUserId(1);
+        List<Course> courses = courseDao.getCoursesIdByUserId(1L);
         assertFalse(courses.isEmpty());
     }
 }

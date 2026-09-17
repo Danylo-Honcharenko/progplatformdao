@@ -6,14 +6,14 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * Сутність "Аунтифіковані користувачі"
+ * Сутність "Аутентифіковані користувачі"
  */
 @Data
 @Builder
 public class Auth {
-    private int id;
-    private int userId;
-    private String accessToken;
+    private Long id;
+    private Long userId;
     private Date created;
     private Date expiresIn;
+    private Date revoked;
 }

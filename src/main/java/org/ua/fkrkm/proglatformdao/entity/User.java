@@ -1,22 +1,15 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Користувач"
  */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
-    private Integer id;
+@Getter
+@Setter
+@SuperBuilder
+public class User extends BaseEntity {
     // Імя
     private String first_name;
     // Фамілія
@@ -26,9 +19,5 @@ public class User {
     // Пароль
     private String password;
     // ID ролі
-    private Integer roleId;
-    // Час створення
-    private Date created;
-    // Час оновлення
-    private Date updated;
+    private Long roleId;
 }

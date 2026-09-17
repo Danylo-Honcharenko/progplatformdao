@@ -11,10 +11,10 @@ public class ModuleMapper implements RowMapper<Module> {
     @Override
     public Module mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Module.builder()
-                .id(rs.getInt("id"))
+                .id(rs.getLong("id"))
                 .name(rs.getString("name"))
                 .description(rs.getString("description"))
-                .courseId(rs.getInt("course_id"))
+                .courseId(rs.getLong("course_id"))
                 .created(rs.getTimestamp("created"))
                 .updated(rs.getTimestamp("updated"))
                 .build();

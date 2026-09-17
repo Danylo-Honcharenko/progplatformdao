@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Клас зіставлення рядків отриманих з бази даних з сутністю "User"
+ * Клас зіставлення рядків, отриманих з бази даних, із сутністю "User"
  */
 public class UserMapper implements RowMapper<User> {
     /**
-     * Зіставлення рядків отриманих з бази даних з сутністю
+     * Зіставлення рядків, отриманих з бази даних, із сутністю
      *
      * @param rs рядок отриманий з бази даних
      * @param rowNum номер рядка
@@ -21,12 +21,12 @@ public class UserMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return User.builder()
-                .id(rs.getInt("id"))
+                .id(rs.getLong("id"))
                 .first_name(rs.getString("first_name"))
                 .last_name(rs.getString("last_name"))
                 .email(rs.getString("email"))
                 .password(rs.getString("password"))
-                .roleId(rs.getInt("role_id"))
+                .roleId(rs.getLong("role_id"))
                 .created(rs.getTimestamp("created"))
                 .updated(rs.getTimestamp("updated"))
                 .build();

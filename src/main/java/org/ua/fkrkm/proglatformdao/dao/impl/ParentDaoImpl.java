@@ -85,7 +85,7 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
      * {@inheritDoc}
      */
     @Override
-    public List<T> getById(int id) {
+    public List<T> getById(Long id) {
         // Запит
         String sql = "SELECT * FROM " + this.tableName + " WHERE id = :id";
         // Підставляємо параметри в запит
@@ -108,7 +108,7 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
      * {@inheritDoc}
      */
     @Override
-    public int delete(int id) {
+    public int delete(Long id) {
         // Запит
         String sql = "DELETE FROM " + tableName + " WHERE id = :id;";
         // Робимо запит

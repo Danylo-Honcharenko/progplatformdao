@@ -37,7 +37,7 @@ public class TopicDaoImpTest {
         Topic topic = Topic.builder()
                 .name("Test")
                 .description("test")
-                .moduleId(1)
+                .moduleId(1L)
                 .created(new Date())
                 .build();
 
@@ -47,10 +47,10 @@ public class TopicDaoImpTest {
     @Test
     public void updateTest() {
         Topic updated = Topic.builder()
-                .id(1)
+                .id(1L)
                 .name("Test 1")
                 .description("test 2")
-                .moduleId(1)
+                .moduleId(1L)
                 .updated(new Date())
                 .build();
 
@@ -65,24 +65,24 @@ public class TopicDaoImpTest {
 
     @Test
     public void getByIdTest() {
-        List<Topic> topic = topicDao.getById(1);
+        List<Topic> topic = topicDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(topic));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, topicDao.delete(3));
+        assertEquals(1, topicDao.delete(3L));
     }
 
     @Test
     public void findAllTopicsByModuleIdTest() {
-        List<Topic> topics = topicDao.findAllTopicsByModuleId(1);
+        List<Topic> topics = topicDao.findAllTopicsByModuleId(1L);
         assertFalse(topics.isEmpty());
     }
 
     @Test
     public void findAllTopicsByModuleIdListTest() {
-        List<Topic> allTopicsByModuleIdList = topicDao.findAllTopicsByModuleIdList(List.of(1, 2));
+        List<Topic> allTopicsByModuleIdList = topicDao.findAllTopicsByModuleIdList(List.of(1L, 2L));
         assertFalse(allTopicsByModuleIdList.isEmpty());
     }
 }

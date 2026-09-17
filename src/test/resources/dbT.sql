@@ -97,9 +97,9 @@ CREATE TABLE IF NOT EXISTS `module_stat` (
 CREATE TABLE IF NOT EXISTS `auth` (
     `id` SERIAL PRIMARY KEY,
     `user_id` INT,
-    `access_token` VARCHAR(255),
     `created` TIMESTAMP,
     `expires_in` TIMESTAMP,
+    `revoked_at`TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -173,8 +173,8 @@ VALUES (1, 1, 1);
 INSERT INTO module_stat (module_id, topic_id, user_id)
 VALUES (1, 1, 1);
 
-INSERT INTO auth (user_id, access_token, created, expires_in)
-VALUES (1, '$123456#', '2024-04-12 09:12:44', '2024-04-12 09:12:44');
+INSERT INTO auth (user_id, created, expires_in)
+VALUES (1, '2024-04-12 09:12:44', '2024-04-12 09:12:44');
 
-INSERT INTO auth (user_id, access_token, created, expires_in)
-VALUES (1, '$123456#', '2024-04-12 09:12:44', '2024-04-12 09:12:44');
+INSERT INTO auth (user_id, created, expires_in)
+VALUES (2, '2024-04-12 09:12:44', '2024-04-12 09:12:44');

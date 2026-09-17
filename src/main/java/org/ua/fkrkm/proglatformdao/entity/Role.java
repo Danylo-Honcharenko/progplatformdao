@@ -1,14 +1,16 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Роль"
  */
-@Data
-@Builder
-public class Role {
-    private Integer id;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class Role extends BaseEntity {
     // Назва ролі
     private String name;
 }

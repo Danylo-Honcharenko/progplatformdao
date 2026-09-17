@@ -1,24 +1,20 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
 import lombok.*;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Тема"
  */
-@Data
-@Builder
-public class Topic {
-    private Integer id;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class Topic extends BaseEntity {
     // Назва теми
     private String name;
     // Опис теми
     private String description;
     // ID курсу
-    private Integer moduleId;
-    // Час створення
-    private Date created;
-    // Час оновлення
-    private Date updated;
+    private Long moduleId;
 }

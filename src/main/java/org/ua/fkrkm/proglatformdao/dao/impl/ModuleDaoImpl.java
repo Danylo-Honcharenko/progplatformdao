@@ -25,7 +25,7 @@ public class ModuleDaoImpl extends ParentDaoImpl<Module> implements ModuleDaoI {
     }
 
     @Override
-    public List<Module> getModulesByCourseId(int courseId) {
+    public List<Module> getModulesByCourseId(Long courseId) {
         String sql = "SELECT * FROM " + this.tableName + " WHERE course_id = :courseId ORDER BY id";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("courseId", courseId), new ModuleMapper());
     }

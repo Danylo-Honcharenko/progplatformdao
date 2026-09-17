@@ -28,7 +28,7 @@ public class ExerciseDaoImpl extends ParentDaoImpl<Exercise> implements Exercise
 
 
     @Override
-    public List<Exercise> findExercisesByTopicId(int topicId) {
+    public List<Exercise> findExercisesByTopicId(Long topicId) {
         String sql = "SELECT * FROM " + this.tableName + " WHERE topic_id = :topicId";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("topicId", topicId), new ExerciseMapper());
     }

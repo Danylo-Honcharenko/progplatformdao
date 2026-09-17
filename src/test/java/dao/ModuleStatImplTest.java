@@ -35,9 +35,9 @@ public class ModuleStatImplTest {
     @Test
     public void createTest() {
         ModuleStat moduleStat = ModuleStat.builder()
-                .moduleId(1)
-                .topicId(1)
-                .userId(1)
+                .moduleId(1L)
+                .topicId(1L)
+                .userId(1L)
                 .build();
 
         assertTrue(moduleCompleteDao.create(moduleStat) > 0);
@@ -46,10 +46,10 @@ public class ModuleStatImplTest {
     @Test
     public void updateTest() {
         ModuleStat moduleStat = ModuleStat.builder()
-                .id(1)
-                .moduleId(1)
-                .topicId(1)
-                .userId(2)
+                .id(1L)
+                .moduleId(1L)
+                .topicId(1L)
+                .userId(2L)
                 .build();
 
         assertEquals(1, moduleCompleteDao.update(moduleStat));
@@ -63,24 +63,24 @@ public class ModuleStatImplTest {
 
     @Test
     public void getByIdTest() {
-        List<ModuleStat> moduleStat = moduleCompleteDao.getById(1);
+        List<ModuleStat> moduleStat = moduleCompleteDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(moduleStat));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, moduleCompleteDao.delete(2));
+        assertEquals(1, moduleCompleteDao.delete(2L));
     }
 
     @Test
     public void findModuleCompleteByUserIdTest() {
-        List<ModuleStat> moduleStats = moduleCompleteDao.findModuleStatByUserId(1);
+        List<ModuleStat> moduleStats = moduleCompleteDao.findModuleStatByUserId(1L);
         assertFalse(moduleStats.isEmpty());
     }
 
     @Test
     public void findModulesStatByUserIdTest() {
-        List<ModuleStateView> modulesStatByUserId = moduleCompleteDao.findModulesStatByUserId(1);
+        List<ModuleStateView> modulesStatByUserId = moduleCompleteDao.findModulesStatByUserId(1L);
         assertFalse(modulesStatByUserId.isEmpty());
     }
 }

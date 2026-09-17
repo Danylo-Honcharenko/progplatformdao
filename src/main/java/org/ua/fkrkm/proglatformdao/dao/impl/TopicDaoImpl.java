@@ -31,7 +31,7 @@ public class TopicDaoImpl extends ParentDaoImpl<Topic> implements TopicDaoI {
      * {@inheritDoc}
      */
     @Override
-    public List<Topic> findAllTopicsByModuleId(int moduleId) {
+    public List<Topic> findAllTopicsByModuleId(Long moduleId) {
         String sql = "SELECT * FROM " + this.tableName + " WHERE module_id = :moduleId ORDER BY id;";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("moduleId", moduleId), new TopicMapper());
     }
@@ -40,7 +40,7 @@ public class TopicDaoImpl extends ParentDaoImpl<Topic> implements TopicDaoI {
      * {@inheritDoc}
      */
     @Override
-    public List<Topic> findAllTopicsByModuleIdList(List<Integer> moduleIds) {
+    public List<Topic> findAllTopicsByModuleIdList(List<Long> moduleIds) {
         String sql = "SELECT * FROM " + this.tableName + " WHERE module_id IN (%s) ORDER BY module_id;";
         return this.jdbcTemplate.query(String.format(sql, StringUtils.join(moduleIds, ",")), new TopicMapper());
     }

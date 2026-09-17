@@ -3,7 +3,6 @@ package dao;
 import configuration.Database;
 import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
@@ -40,7 +39,7 @@ public class UserDaoImplTest {
                 .last_name("Test")
                 .email("email@email.com")
                 .password("password")
-                .roleId(1)
+                .roleId(1L)
                 .created(new Date())
                 .build();
 
@@ -50,12 +49,12 @@ public class UserDaoImplTest {
     @Test
     public void updateTest() {
         User user = User.builder()
-                .id(1)
+                .id(1L)
                 .first_name("User 2")
                 .last_name("Test 2")
                 .email("email@email.com")
                 .password("password")
-                .roleId(1)
+                .roleId(1L)
                 .updated(new Date())
                 .build();
 
@@ -76,12 +75,12 @@ public class UserDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        List<User> user = userDao.getById(1);
+        List<User> user = userDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(user));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, userDao.delete(4));
+        assertEquals(1, userDao.delete(4L));
     }
 }

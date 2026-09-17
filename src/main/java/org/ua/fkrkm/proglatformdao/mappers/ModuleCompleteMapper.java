@@ -11,10 +11,10 @@ public class ModuleCompleteMapper implements RowMapper<ModuleStat> {
     @Override
     public ModuleStat mapRow(ResultSet rs, int rowNum) throws SQLException {
         return ModuleStat.builder()
-                .id(rs.getInt("id"))
-                .moduleId(rs.getInt("module_id"))
-                .topicId(rs.getInt("topic_id"))
-                .userId(rs.getInt("user_id"))
+                .id(rs.getLong("id"))
+                .moduleId(rs.getLong("module_id"))
+                .topicId(rs.getLong("topic_id"))
+                .userId(rs.getLong("user_id"))
                 .build();
     }
 }

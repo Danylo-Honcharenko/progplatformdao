@@ -11,11 +11,11 @@ public class AuthMapper implements RowMapper<Auth> {
     @Override
     public Auth mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Auth.builder()
-                .id(rs.getInt("id"))
-                .userId(rs.getInt("user_id"))
-                .accessToken(rs.getString("access_token"))
+                .id(rs.getLong("id"))
+                .userId(rs.getLong("user_id"))
                 .created(rs.getTimestamp("created"))
                 .expiresIn(rs.getTimestamp("expires_in"))
+                .revoked(rs.getTimestamp("revoked_at"))
                 .build();
     }
 }

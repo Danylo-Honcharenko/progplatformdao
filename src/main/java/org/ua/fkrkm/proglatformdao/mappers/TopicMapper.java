@@ -7,12 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Клас зіставлення рядків отриманих з бази даних з сутністю "Topic"
+ * Клас зіставлення рядків, отриманих з бази даних, із сутністю "Topic"
  */
 public class TopicMapper implements RowMapper<Topic> {
 
     /**
-     * Зіставлення рядків отриманих з бази даних з сутністю
+     * Зіставлення рядків, отриманих з бази даних із сутністю
      *
      * @param rs рядок отриманий з бази даних
      * @param rowNum номер рядка
@@ -22,10 +22,10 @@ public class TopicMapper implements RowMapper<Topic> {
     @Override
     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Topic.builder()
-                .id(rs.getInt("id"))
+                .id(rs.getLong("id"))
                 .name(rs.getString("name"))
                 .description(rs.getString("description"))
-                .moduleId(rs.getInt("module_id"))
+                .moduleId(rs.getLong("module_id"))
                 .created(rs.getTimestamp("created"))
                 .updated(rs.getTimestamp("updated"))
                 .build();

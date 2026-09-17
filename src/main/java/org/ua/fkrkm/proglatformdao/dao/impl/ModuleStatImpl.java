@@ -33,7 +33,7 @@ public class ModuleStatImpl extends ParentDaoImpl<ModuleStat> implements ModuleS
 
 
     @Override
-    public List<ModuleStat> findModuleStatByUserId(Integer userId) {
+    public List<ModuleStat> findModuleStatByUserId(Long userId) {
         if (userId == null) return new ArrayList<>();
         String sql = "SELECT * FROM " + this.tableName + " WHERE user_id = :userId";
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("userId", userId), new ModuleCompleteMapper());
@@ -48,7 +48,7 @@ public class ModuleStatImpl extends ParentDaoImpl<ModuleStat> implements ModuleS
      * {@inheritDoc}
      */
     @Override
-    public List<ModuleStateView> findModulesStatByUserId(Integer userId) {
+    public List<ModuleStateView> findModulesStatByUserId(Long userId) {
         if (userId == null) return new ArrayList<>();
         String sql = """
                 WITH complite_module_by_user_id AS (

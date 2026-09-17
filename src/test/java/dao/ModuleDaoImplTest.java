@@ -37,7 +37,7 @@ public class ModuleDaoImplTest {
         Module module = Module.builder()
                 .name("test")
                 .description("test")
-                .courseId(1)
+                .courseId(1L)
                 .created(new Date())
                 .build();
 
@@ -47,10 +47,10 @@ public class ModuleDaoImplTest {
     @Test
     public void updateTest() {
         Module module = Module.builder()
-                .id(1)
+                .id(1L)
                 .name("test")
                 .description("test")
-                .courseId(1)
+                .courseId(1L)
                 .created(new Date())
                 .build();
 
@@ -65,18 +65,18 @@ public class ModuleDaoImplTest {
 
     @Test
     public void getByIdTest() {
-        List<Module> module = moduleDao.getById(1);
+        List<Module> module = moduleDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(module));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, moduleDao.delete(2));
+        assertEquals(1, moduleDao.delete(2L));
     }
 
     @Test
     public void getModulesByCourseIdTest() {
-        List<Module> modules = moduleDao.getModulesByCourseId(1);
+        List<Module> modules = moduleDao.getModulesByCourseId(1L);
         assertFalse(modules.isEmpty());
     }
 }

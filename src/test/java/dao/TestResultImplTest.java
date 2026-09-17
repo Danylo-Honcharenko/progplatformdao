@@ -35,9 +35,9 @@ public class TestResultImplTest {
     public void createTest() {
         TestResult testResult = TestResult.builder()
                 .testUuid("test")
-                .userId(1)
-                .maxAssessment(1)
-                .assessment(1)
+                .userId(1L)
+                .maxAssessment(1L)
+                .assessment(1L)
                 .correct("{\"Test\": \"ok!\"}")
                 .incorrect("{}")
                 .created(new Date())
@@ -48,18 +48,18 @@ public class TestResultImplTest {
 
     @Test
     public void getByIdTest() {
-        List<TestResult> testResult = testResultDao.getById(1);
+        List<TestResult> testResult = testResultDao.getById(1L);
         assertFalse(CollectionUtils.isEmpty(testResult));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, testResultDao.delete(2));
+        assertEquals(1, testResultDao.delete(2L));
     }
 
     @Test
     public void getTestResultByUserIdTest() {
-        List<TestResult> results = testResultDao.getTestResultsByUserId(1);
+        List<TestResult> results = testResultDao.getTestResultsByUserId(1L);
         assertEquals(1, results.get(results.size() - 1).getId());
     }
 }

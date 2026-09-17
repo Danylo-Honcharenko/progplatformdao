@@ -1,22 +1,20 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
-import lombok.Builder;
-import lombok.Data;
-
-import java.util.Date;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Результат тестування
  */
-@Data
-@Builder
-public class TestResult {
-    private int id;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class TestResult extends BaseEntity {
     private String testUuid;
-    private int userId;
-    private int maxAssessment;
-    private int assessment;
+    private Long userId;
+    private Long maxAssessment;
+    private Long assessment;
     private String correct;
     private String incorrect;
-    private Date created;
 }

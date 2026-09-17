@@ -38,7 +38,7 @@ public class ExerciseDaoTest {
                 .name("Exercise 2")
                 .description("Exercise")
                 .assessment(12)
-                .topicId(2)
+                .topicId(2L)
                 .created(new Date())
                 .build();
 
@@ -48,11 +48,11 @@ public class ExerciseDaoTest {
     @Test
     public void updateTest() {
         Exercise updated = Exercise.builder()
-                .id(1)
+                .id(1L)
                 .name("Exercise 1")
                 .description("Exercise")
                 .assessment(11)
-                .topicId(2)
+                .topicId(2L)
                 .updated(new Date())
                 .build();
 
@@ -67,12 +67,12 @@ public class ExerciseDaoTest {
 
     @Test
     public void getByIdTest() {
-        List<Exercise> exercise = exerciseDaoI.getById(1);
+        List<Exercise> exercise = exerciseDaoI.getById(1L);
         assertFalse(CollectionUtils.isEmpty(exercise));
     }
 
     @Test
     public void deleteTest() {
-        assertEquals(1, exerciseDaoI.delete(2));
+        assertEquals(1, exerciseDaoI.delete(2L));
     }
 }

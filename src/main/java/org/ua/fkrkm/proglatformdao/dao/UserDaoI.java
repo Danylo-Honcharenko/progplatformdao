@@ -19,13 +19,12 @@ public interface UserDaoI extends ParentDaoI<User> {
     /**
      * Знайти користувача по параметрам
      *
-     * @param id ID користувача
      * @param firstName імя
      * @param lastName фамілія
      * @param email email
      * @return List<User> користувачі
      */
-    List<User> findByParams(Integer id, String firstName, String lastName, String email);
+    List<User> findByParams(String firstName, String lastName, String email);
 
     /**
      * Знайти всіх користувачів

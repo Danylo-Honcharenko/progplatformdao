@@ -28,7 +28,7 @@ public interface ParentDaoI<T> {
      * @param id ID запису
      * @return List<T> сутність
      */
-    List<T> getById(int id);
+    List<T> getById(Long id);
     /**
      * Отримати всі записи
      *
@@ -41,5 +41,5 @@ public interface ParentDaoI<T> {
      * @param id ID запису для видалення
      * @return int кількість видалених записів
      */
-    int delete(int id);
+    int delete(Long id);
 }

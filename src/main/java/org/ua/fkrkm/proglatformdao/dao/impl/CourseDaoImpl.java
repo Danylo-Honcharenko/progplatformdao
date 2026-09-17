@@ -32,7 +32,7 @@ public class CourseDaoImpl extends ParentDaoImpl<Course> implements CourseDaoI {
      * {@inheritDoc}
      */
     @Override
-    public void addUserToCourse(int courseId, int userId) {
+    public void addUserToCourse(Long courseId, Long userId) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("courseId", courseId)
                 .addValue("userId", userId);
@@ -44,7 +44,7 @@ public class CourseDaoImpl extends ParentDaoImpl<Course> implements CourseDaoI {
      * {@inheritDoc}
      */
     @Override
-    public void removeAllUsersFromCourse(Integer courseId) {
+    public void removeAllUsersFromCourse(Long courseId) {
         removeUserFromCourse(courseId, null);
     }
 
@@ -52,7 +52,7 @@ public class CourseDaoImpl extends ParentDaoImpl<Course> implements CourseDaoI {
      * {@inheritDoc}
      */
     @Override
-    public void removeUserFromCourse(Integer courseId, Integer userId) {
+    public void removeUserFromCourse(Long courseId, Long userId) {
         MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
         String sql = "DELETE FROM user_course WHERE 1 = 1 ";
 
@@ -73,18 +73,18 @@ public class CourseDaoImpl extends ParentDaoImpl<Course> implements CourseDaoI {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getCourseUsersIdByCourseId(int courseId) {
+    public List<Long> getCourseUsersIdByCourseId(Long courseId) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("courseId", courseId);
         String sql = "SELECT user_id FROM user_course WHERE course_id = :courseId;";
-        return this.namedParameterJdbcTemplate.queryForList(sql, sqlParameterSource, Integer.class);
+        return this.namedParameterJdbcTemplate.queryForList(sql, sqlParameterSource, Long.class);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Course> getCoursesIdByUserId(int userId) {
+    public List<Course> getCoursesIdByUserId(Long userId) {
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
                 .addValue("userId", userId);
         String sql = "SELECT * FROM courses WHERE id IN (SELECT course_id FROM user_course WHERE user_id = :userId) ORDER BY id;";

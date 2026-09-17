@@ -14,32 +14,32 @@ public interface CourseDaoI extends ParentDaoI<Course> {
      * @param courseId ID курсу
      * @param userId ID користувача
      */
-    void addUserToCourse(int courseId, int userId);
+    void addUserToCourse(Long courseId, Long userId);
     /**
      * Видалити всіх користувачів курсу
      *
      * @param courseId ID курсу
      */
-    void removeAllUsersFromCourse(Integer courseId);
+    void removeAllUsersFromCourse(Long courseId);
     /**
      * Видалити користувача з курсу
      *
      * @param courseId ID курсу
      * @param userId ID користувача
      */
-    void removeUserFromCourse(Integer courseId, Integer userId);
+    void removeUserFromCourse(Long courseId, Long userId);
     /**
      * Отримати ID користувачів курсу
      *
      * @param courseId ID курсу
      * @return List<Integer> ID користувачів
      */
-    List<Integer> getCourseUsersIdByCourseId(int courseId);
+    List<Long> getCourseUsersIdByCourseId(Long courseId);
     /**
      * Отримати курси користувача
      *
      * @param userId ID користувача
      * @return List<Course> список курсів
      */
-    List<Course> getCoursesIdByUserId(int userId);
+    List<Course> getCoursesIdByUserId(Long userId);
 }

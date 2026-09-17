@@ -1,24 +1,20 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
 import lombok.*;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Відповідь на завдання"
  */
-@Data
-@Builder
-public class AnswerToExercise {
-    private Integer id;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class AnswerToExercise extends BaseEntity {
     // Текст відповіді
     private String text;
     // Шлях до файлу
     private String filePath;
     // ID користувача
     private Long userId;
-    // Час створення
-    private Date created;
-    // Час оновлення
-    private Date updated;
 }

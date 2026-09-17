@@ -32,21 +32,16 @@ public class UserDaoImpl extends ParentDaoImpl<User> implements UserDaoI {
      */
     @Override
     public List<User> findByEmail(String email) {
-        return findByParams(null, null, null, email);
+        return findByParams( null, null, email);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<User> findByParams(Integer id, String firstName, String lastName, String email) {
+    public List<User> findByParams(String firstName, String lastName, String email) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         String sql = "SELECT * FROM " + this.tableName + " WHERE 1 = 1 ";
-
-        if (id != null) {
-            sql += "AND id = :id";
-            params.addValue("id", id);
-        }
 
         if (firstName != null) {
             sql += "AND first_name = :firstName";

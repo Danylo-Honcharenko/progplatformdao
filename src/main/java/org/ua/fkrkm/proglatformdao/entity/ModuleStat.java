@@ -1,16 +1,17 @@
 package org.ua.fkrkm.proglatformdao.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Сутність "Статистика проходження модуля"
  */
-@Data
-@Builder
-public class ModuleStat {
-    private int id;
-    private int moduleId;
-    private int topicId;
-    private int userId;
+@Getter
+@Setter
+@SuperBuilder
+@EqualsAndHashCode(callSuper = false)
+public class ModuleStat extends BaseEntity {
+    private Long moduleId;
+    private Long topicId;
+    private Long userId;
 }
