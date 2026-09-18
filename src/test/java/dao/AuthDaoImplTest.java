@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,8 +38,9 @@ public class AuthDaoImplTest {
         Auth auth = Auth.builder()
                 .userId(1L)
                 .created(new Date())
-                .expiresIn(new Date())
-                .revoked(new Date())
+                .sid(UUID.randomUUID())
+                .expiresAt(new Date())
+                .revokedAt(new Date())
                 .build();
 
         assertTrue(authDao.create(auth) > 0);
@@ -50,8 +52,9 @@ public class AuthDaoImplTest {
                 .id(1L)
                 .userId(1L)
                 .created(new Date())
-                .expiresIn(new Date())
-                .revoked(new Date())
+                .sid(UUID.randomUUID())
+                .expiresAt(new Date())
+                .revokedAt(new Date())
                 .build();
 
         assertEquals(1, authDao.update(auth));

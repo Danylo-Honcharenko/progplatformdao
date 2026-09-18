@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Сутність "Аутентифіковані користувачі"
@@ -13,7 +14,8 @@ import java.util.Date;
 public class Auth {
     private Long id;
     private Long userId;
+    private UUID sid;
     private Date created;
-    private Date expiresIn;
-    private Date revoked;
+    private Date expiresAt;
+    private Date revokedAt;
 }

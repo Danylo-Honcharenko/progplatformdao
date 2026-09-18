@@ -5,6 +5,7 @@ import org.ua.fkrkm.proglatformdao.entity.Auth;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class AuthMapper implements RowMapper<Auth> {
 
@@ -13,9 +14,10 @@ public class AuthMapper implements RowMapper<Auth> {
         return Auth.builder()
                 .id(rs.getLong("id"))
                 .userId(rs.getLong("user_id"))
+                .sid(rs.getObject("sid", UUID.class))
                 .created(rs.getTimestamp("created"))
-                .expiresIn(rs.getTimestamp("expires_in"))
-                .revoked(rs.getTimestamp("revoked_at"))
+                .expiresAt(rs.getTimestamp("expires_at"))
+                .revokedAt(rs.getTimestamp("revoked_at"))
                 .build();
     }
 }

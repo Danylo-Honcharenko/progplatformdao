@@ -6,7 +6,9 @@ import org.ua.fkrkm.proglatformdao.entity.Auth;
 import org.ua.fkrkm.proglatformdao.mappers.AuthMapper;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
 import java.util.List;
+import java.util.UUID;
 
 public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
 
@@ -18,9 +20,9 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
     public AuthDaoImpl(DataSource dataSource) {
         super(dataSource);
         setTableName("auth");
-        setParam(":userId, :created, :expiresIn, :revoked");
-        setValues("user_id, created, expires_in, revoked_at");
-        setValuesForUpdate("user_id = :userId, created = :created, expires_in = :expiresIn, revoked_at = :revoked");
+        setParam(":userId, :created, :sid, :expiresAt, :revokedAt");
+        setValues("user_id, created, sid, expires_at, revoked_at");
+        setValuesForUpdate("user_id = :userId, created = :created, sid = :sid, expires_at = :expiresAt, revoked_at = :revokedAt");
         setRowMapper(new AuthMapper());
     }
 
@@ -33,6 +35,35 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
         return this.namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource("userId", userId), new AuthMapper());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void revokeByUserId(Long userId, String sid) {
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+        sqlParameterSource.addValue("userId", userId);
+        sqlParameterSource.addValue("sid", UUID.fromString(sid));
+
+        String sql = "UPDATE " + this.tableName + " SET revoked_at = CURRENT_TIMESTAMP WHERE user_id = :userId AND sid = :sid;";
+        this.namedParameterJdbcTemplate.update(sql, sqlParameterSource);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRevokedByUserId(Long userId, String sid) {
+        MapSqlParameterSource sqlParameterSource = new MapSqlParameterSource();
+        sqlParameterSource.addValue("userId", userId);
+        sqlParameterSource.addValue("sid", UUID.fromString(sid));
+
+        String sql = "SELECT COUNT(*) AS COUNT FROM " + this.tableName + " WHERE user_id = :userId " +
+                "AND revoked_at IS NULL " +
+                "AND expires_at < CURRENT_TIMESTAMP " +
+                "AND sid = :sid;";
+        return this.namedParameterJdbcTemplate.query(sql, sqlParameterSource, (ResultSet rs, int rowNum) -> rs.getInt("COUNT") != 0).get(0);
+    }
+
 //    /**
 //     * {@inheritDoc}
 //     */
@@ -42,12 +73,12 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
 //        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("accessToken", accessToken));
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void deleteAllTokensByUserId(Long userId) {
-        String sql = "DELETE FROM " + this.tableName + " WHERE user_id = :userId AND expires_in < CURRENT_TIMESTAMP;";
-        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("userId", userId));
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public void deleteAllTokensByUserId(Long userId) {
+//        String sql = "DELETE FROM " + this.tableName + " WHERE user_id = :userId AND expires_in < CURRENT_TIMESTAMP;";
+//        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("userId", userId));
+//    }
 }
