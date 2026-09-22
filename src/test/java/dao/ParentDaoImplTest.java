@@ -1,20 +1,13 @@
 package dao;
 
 import configuration.Database;
-import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.ParentDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.CourseDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Course;
 
-import javax.sql.DataSource;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,14 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ParentDaoImplTest {
 
-    private final ParentDaoI<Course> parentDao = new CourseDaoImpl(Database.getDataSource());
+    private ParentDaoI<Course> parentDao;
 
     @BeforeEach
-    public void setUp() throws SQLException, IOException {
-        DataSource dataSource = Database.getDataSource();
-        Connection connection = dataSource.getConnection();
-
-        RunScript.execute(connection, new FileReader(new ClassPathResource("dbT.sql").getFile()));
+    public void setUp() {
+        this.parentDao = new CourseDaoImpl(Database.getDataSource());
     }
 
     @Test

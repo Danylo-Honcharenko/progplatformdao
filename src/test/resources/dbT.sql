@@ -91,7 +91,8 @@ CREATE TABLE IF NOT EXISTS `module_stat` (
     `user_id` INT,
     FOREIGN KEY (module_id) REFERENCES module(id),
     FOREIGN KEY (topic_id) REFERENCES topics(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE (topic_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS `auth` (
@@ -172,7 +173,7 @@ INSERT INTO module_stat (module_id, topic_id, user_id)
 VALUES (1, 1, 1);
 
 INSERT INTO module_stat (module_id, topic_id, user_id)
-VALUES (1, 1, 1);
+VALUES (1, 1, 2);
 
 INSERT INTO auth (user_id, created, sid, expires_at, revoked_at)
 VALUES (1, '2024-04-12 09:12:44', '550e8400-e29b-41d4-a716-446655440000', '2024-04-12 09:12:44', '2024-04-12 09:12:44');

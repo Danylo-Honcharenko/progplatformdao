@@ -1,42 +1,32 @@
 package dao;
 
 import configuration.Database;
-import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.ModuleStatDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.ModuleStatImpl;
 import org.ua.fkrkm.proglatformdao.entity.ModuleStat;
 import org.ua.fkrkm.proglatformdao.entity.view.ModuleStateView;
 
-import javax.sql.DataSource;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModuleStatImplTest {
 
-    private final ModuleStatDaoI moduleCompleteDao = new ModuleStatImpl(Database.getDataSource());
+    private ModuleStatDaoI moduleCompleteDao;
 
     @BeforeEach
-    public void setUp() throws SQLException, IOException {
-        DataSource dataSource = Database.getDataSource();
-        Connection connection = dataSource.getConnection();
-
-        RunScript.execute(connection, new FileReader(new ClassPathResource("dbT.sql").getFile()));
+    public void setUp() {
+        this.moduleCompleteDao = new ModuleStatImpl(Database.getDataSource());
     }
 
     @Test
     public void createTest() {
         ModuleStat moduleStat = ModuleStat.builder()
                 .moduleId(1L)
-                .topicId(1L)
+                .topicId(2L)
                 .userId(1L)
                 .build();
 
@@ -48,7 +38,7 @@ public class ModuleStatImplTest {
         ModuleStat moduleStat = ModuleStat.builder()
                 .id(1L)
                 .moduleId(1L)
-                .topicId(1L)
+                .topicId(2L)
                 .userId(2L)
                 .build();
 
@@ -74,7 +64,7 @@ public class ModuleStatImplTest {
 
     @Test
     public void findModuleCompleteByUserIdTest() {
-        List<ModuleStat> moduleStats = moduleCompleteDao.findModuleStatByUserId(1L);
+        List<ModuleStat> moduleStats = moduleCompleteDao.findModuleStatByUserId(2L);
         assertFalse(moduleStats.isEmpty());
     }
 

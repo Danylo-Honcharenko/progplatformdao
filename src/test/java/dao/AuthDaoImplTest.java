@@ -1,20 +1,13 @@
 package dao;
 
 import configuration.Database;
-import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.CollectionUtils;
 import org.ua.fkrkm.proglatformdao.dao.AuthDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.AuthDaoImpl;
 import org.ua.fkrkm.proglatformdao.entity.Auth;
 
-import javax.sql.DataSource;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,14 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthDaoImplTest {
 
-    private final AuthDaoI authDao = new AuthDaoImpl(Database.getDataSource());
+    private AuthDaoI authDao;
 
     @BeforeEach
-    public void setUp() throws SQLException, IOException {
-        DataSource dataSource = Database.getDataSource();
-        Connection connection = dataSource.getConnection();
-
-        RunScript.execute(connection, new FileReader(new ClassPathResource("dbT.sql").getFile()));
+    public void setUp() {
+        this.authDao = new AuthDaoImpl(Database.getDataSource());
     }
 
     @Test
