@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -13,10 +12,8 @@ public class ModuleView {
     private Long id;
     private String name;
     private String description;
-    private List<TopicView> topics;
     private BigDecimal complete;
     private Boolean active;
     private Date created;
     private Date updated;
-    private List<Integer> pages;
 }
