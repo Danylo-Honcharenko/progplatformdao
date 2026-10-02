@@ -20,9 +20,9 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
     public AuthDaoImpl(DataSource dataSource) {
         super(dataSource);
         setTableName("auth");
-        setParam(":userId, :created, :sid, :expiresAt, :revokedAt");
-        setValues("user_id, created, sid, expires_at, revoked_at");
-        setValuesForUpdate("user_id = :userId, created = :created, sid = :sid, expires_at = :expiresAt, revoked_at = :revokedAt");
+        setParam(":userId, :created, :sid, :expiresAt, :revokedAt, :deleteAt");
+        setValues("user_id, created, sid, expires_at, revoked_at, delete_at");
+        setValuesForUpdate("user_id = :userId, created = :created, sid = :sid, expires_at = :expiresAt, revoked_at = :revokedAt, delete_at = :deleteAt");
         setRowMapper(new AuthMapper());
     }
 
@@ -64,21 +64,12 @@ public class AuthDaoImpl extends ParentDaoImpl<Auth> implements AuthDaoI {
         return this.namedParameterJdbcTemplate.query(sql, sqlParameterSource, (ResultSet rs, int rowNum) -> rs.getInt("COUNT") != 0).get(0);
     }
 
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void deleteByAccessToken(String accessToken) {
-//        String sql = "DELETE FROM " + this.tableName + " WHERE access_token = :accessToken;";
-//        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("accessToken", accessToken));
-//    }
-
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void deleteAllTokensByUserId(Long userId) {
-//        String sql = "DELETE FROM " + this.tableName + " WHERE user_id = :userId AND expires_in < CURRENT_TIMESTAMP;";
-//        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource("userId", userId));
-//    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteExpiredSessions() {
+        String sql = "DELETE FROM " + this.tableName + " WHERE delete_at <= CURRENT_TIMESTAMP ";
+        this.namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource());
+    }
 }

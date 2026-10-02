@@ -18,4 +18,5 @@ public class Auth {
     private Date created;
     private Date expiresAt;
     private Date revokedAt;
+    private Date deleteAt;
 }

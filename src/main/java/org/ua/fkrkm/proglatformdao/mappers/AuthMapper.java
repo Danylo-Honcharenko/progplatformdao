@@ -18,6 +18,7 @@ public class AuthMapper implements RowMapper<Auth> {
                 .created(rs.getTimestamp("created"))
                 .expiresAt(rs.getTimestamp("expires_at"))
                 .revokedAt(rs.getTimestamp("revoked_at"))
+                .deleteAt(rs.getTimestamp("delete_at"))
                 .build();
     }
 }

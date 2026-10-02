@@ -31,6 +31,7 @@ public class AuthDaoImplTest {
                 .sid(UUID.randomUUID())
                 .expiresAt(new Date())
                 .revokedAt(new Date())
+                .deleteAt(new Date())
                 .build();
 
         assertTrue(authDao.create(auth) > 0);

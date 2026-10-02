@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `auth` (
     `created` TIMESTAMP,
     `expires_at` TIMESTAMP,
     `revoked_at`TIMESTAMP,
+    `delete_at` TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
