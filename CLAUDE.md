@@ -21,13 +21,13 @@ Package is `org.ua.fkrkm.proglatformdao` (typo "proglatform", not "progplatform"
 ## Structure
 
 - `dao/*DaoI` — interfaces; `dao/impl/*DaoImpl` — implementations. Most extend `ParentDaoImpl<T>` (generic CRUD over Spring `JdbcTemplate`/`NamedParameterJdbcTemplate`): a subclass constructor configures it via setters — `setTableName`, `setParam` (`:name, :created`), `setValues` (column list), `setValuesForUpdate`, `setRowMapper`. Insert/update bind via `BeanPropertySqlParameterSource`, so entity property names must match the `:param` names. Entity-specific queries are written as raw SQL in the impl.
-- `mappers/` — `RowMapper`s per entity (including composite ones like `ModuleCompleteMapper`).
+- `mappers/` — `RowMapper`s per entity (including composite ones like `ModuleCompleteMapper`; `TestMapper` leaves questions empty, `TestDaoImpl` fills them).
 - `entity/` — Lombok entities (`BaseEntity` base); `entity/view` and `entity/ext` hold joined/aggregated read models.
-- `entityMongo/` and `TestDaoImpl` — the exception: tests/questions are Mongo documents accessed through `MongoTemplate` (constructed from `MongoClient`+db name or `MongoDatabaseFactory`), not `ParentDaoImpl`.
+- `TestDaoImpl` — the exception to the pattern: a `Test` owns its `Question`s (separate `question` table, `options` stored as JSONB via Jackson). It overrides `create`/`update`/`delete` to write test and questions in one transaction (`TransactionTemplate`), and `getById`/`getAll`/`getByTopicId` load questions in a second query. `update` with `questions == null` keeps existing questions, otherwise replaces them.
 
 ## Tests
 
-JUnit 5, in the default package layout `src/test/java/dao` (not mirroring `org.ua...`). `configuration/Database` is a singleton in-memory H2 (`MODE=PostgreSQL`) loaded from `src/test/resources/dbT.sql` — the test schema/data is separate from the server's Flyway migrations, so schema changes must be mirrored in `dbT.sql` by hand (`schema.sql`/`data.sql` also exist there). Load errors are only printed, not thrown, so a broken script shows up as confusing test failures. Mongo tests use embedded flapdoodle.
+JUnit 5, in the default package layout `src/test/java/dao` (not mirroring `org.ua...`). `configuration/Database` is a singleton in-memory H2 (`MODE=PostgreSQL`) loaded from `src/test/resources/dbT.sql` — the test schema/data is separate from the server's Flyway migrations, so schema changes must be mirrored in `dbT.sql` by hand (`schema.sql`/`data.sql` also exist there). Load errors are only printed, not thrown, so a broken script shows up as confusing test failures. H2 stores a plain string written to a JSONB column as a JSON string (double-encoded), unlike PostgreSQL — seed JSON in `dbT.sql` with `FORMAT JSON`, and `QuestionMapper` tolerates both forms.
 
 ## Conventions
 
