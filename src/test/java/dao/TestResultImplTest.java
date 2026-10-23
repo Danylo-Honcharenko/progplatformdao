@@ -25,7 +25,7 @@ public class TestResultImplTest {
     @Test
     public void createTest() {
         TestResult testResult = TestResult.builder()
-                .testUuid("test")
+                .testId(1L)
                 .userId(1L)
                 .maxAssessment(1)
                 .assessment(1)

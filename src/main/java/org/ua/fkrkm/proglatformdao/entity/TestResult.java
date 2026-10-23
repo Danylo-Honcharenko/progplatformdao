@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class TestResult extends BaseEntity {
-    private String testUuid;
+    private Long testId;
     private Long userId;
     private Integer maxAssessment;
     private Integer assessment;

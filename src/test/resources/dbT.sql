@@ -94,13 +94,14 @@ CREATE TABLE IF NOT EXISTS `question` (
 
 CREATE TABLE IF NOT EXISTS `test_result` (
     `id` SERIAL PRIMARY KEY,
-    `test_uuid` VARCHAR(255),
+    `test_id` INT,
     `user_id` INT,
     `max_assessment` INT,
     `assessment` INT,
     `correct` JSONB,
     `incorrect` JSONB,
     `created` TIMESTAMP,
+    FOREIGN KEY (test_id) REFERENCES test(id) ON DELETE SET NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -221,11 +222,11 @@ INSERT INTO question (test_id, question, correct_answer, options, created)
 VALUES (3, 'Чи потрібно оголошувати тип змінної у Python?', 'Ні',
         '["Так", "Ні"]' FORMAT JSON, '2024-05-12 09:12:44');
 
-INSERT INTO test_result (test_uuid, user_id, max_assessment, assessment, correct, incorrect, created)
-VALUES ('oioe79kd90s68n5793', 1, 100, 50, '{"test": "ok!"}', '{}','2024-04-12 09:12:44');
+INSERT INTO test_result (test_id, user_id, max_assessment, assessment, correct, incorrect, created)
+VALUES (1, 1, 100, 50, '{"test": "ok!"}', '{}','2024-04-12 09:12:44');
 
-INSERT INTO test_result (test_uuid, user_id, max_assessment, assessment, correct, incorrect, created)
-VALUES ('pppp79kd90s68n5793', 1, 100, 40, '{}', '{}','2024-04-12 09:12:44');
+INSERT INTO test_result (test_id, user_id, max_assessment, assessment, correct, incorrect, created)
+VALUES (2, 1, 100, 40, '{}', '{}','2024-04-12 09:12:44');
 
 INSERT INTO module_stat (module_id, topic_id, user_id)
 VALUES (1, 1, 1);

@@ -12,7 +12,7 @@ public class TestResultMapper implements RowMapper<TestResult> {
     public TestResult mapRow(ResultSet rs, int rowNum) throws SQLException {
         return TestResult.builder()
                 .id(rs.getLong("id"))
-                .testUuid(rs.getString("test_uuid"))
+                .testId(rs.getObject("test_id", Long.class))
                 .userId(rs.getLong("user_id"))
                 .maxAssessment(rs.getInt("max_assessment"))
                 .assessment(rs.getInt("assessment"))

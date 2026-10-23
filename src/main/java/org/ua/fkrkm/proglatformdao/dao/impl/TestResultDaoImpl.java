@@ -19,9 +19,9 @@ public class TestResultDaoImpl extends ParentDaoImpl<TestResult> implements Test
     public TestResultDaoImpl(DataSource dataSource) {
         super(dataSource);
         setTableName("test_result");
-        setParam(":testUuid, :userId, :maxAssessment, :assessment, :correct::jsonb, :incorrect::jsonb, :created");
-        setValues("test_uuid, user_id, max_assessment, assessment, correct, incorrect, created");
-        setValuesForUpdate("test_uuid = :testUuid, user_id = :userId, max_assessment = :maxAssessment, assessment = :assessment, correct = :correct::jsonb, incorrect = :incorrect::jsonb, created = :created");
+        setParam(":testId, :userId, :maxAssessment, :assessment, :correct::jsonb, :incorrect::jsonb, :created");
+        setValues("test_id, user_id, max_assessment, assessment, correct, incorrect, created");
+        setValuesForUpdate("test_id = :testId, user_id = :userId, max_assessment = :maxAssessment, assessment = :assessment, correct = :correct::jsonb, incorrect = :incorrect::jsonb, created = :created");
         setRowMapper(new TestResultMapper());
     }
 
