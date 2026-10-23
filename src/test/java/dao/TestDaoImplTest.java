@@ -1,21 +1,14 @@
 package dao;
 
-import de.flapdoodle.commons.reverse.TransitionWalker;
-import de.flapdoodle.embed.mongo.commands.ServerAddress;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.mongo.transitions.ImmutableMongod;
-import de.flapdoodle.embed.mongo.transitions.Mongod;
-import de.flapdoodle.embed.mongo.transitions.RunningMongodProcess;
-import org.junit.jupiter.api.AfterEach;
+import configuration.Database;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.ua.fkrkm.proglatformdao.dao.TestDaoI;
 import org.ua.fkrkm.proglatformdao.dao.impl.TestDaoImpl;
-import org.ua.fkrkm.proglatformdao.entityMongo.Question;
+import org.ua.fkrkm.proglatformdao.entity.Question;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,145 +16,124 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestDaoImplTest {
 
     private TestDaoI testDao;
-    private TransitionWalker.ReachedState<RunningMongodProcess> running;
-    private ServerAddress serverAddress;
 
     @BeforeEach
-    public void setup() throws Exception {
-        ImmutableMongod mongodbConfig = Mongod.instance();
-        Version.Main version = Version.Main.V8_0;
-
-        this.running = mongodbConfig.start(version);
-        this.serverAddress = this.running.current().getServerAddress();
-
-        this.testDao = new TestDaoImpl(new SimpleMongoClientDatabaseFactory("mongodb://" + serverAddress + "/test"));
+    public void setUp() {
+        this.testDao = new TestDaoImpl(Database.getDataSource());
     }
 
-    @AfterEach
-    public void clear() {
-        this.serverAddress = null;
-        if (this.running != null) this.running.close();
-        this.running = null;
+    private org.ua.fkrkm.proglatformdao.entity.Test newTest(String name, Long topicId) {
+        List<Question> questions = new ArrayList<>();
+        questions.add(Question.builder()
+                .question("Test 1")
+                .correctAnswer("Option 1")
+                .options(List.of("Option 1", "Option 2", "Option 3"))
+                .build());
+        questions.add(Question.builder()
+                .question("Test 2")
+                .correctAnswer("Option 2")
+                .options(List.of("Option 1", "Option 2"))
+                .build());
+
+        return org.ua.fkrkm.proglatformdao.entity.Test.builder()
+                .name(name)
+                .topicId(topicId)
+                .questions(questions)
+                .created(new Date())
+                .build();
     }
 
     @Test
     public void createTest() {
-        Question question = Question.builder()
-                .question("Test 1")
-                .correctAnswer("Test 1")
-                .options(List.of("Option 1", "Option 2", "Option 3"))
-                .build();
+        int id = testDao.create(newTest("create", 1L));
 
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
+        assertTrue(id > 0);
 
-        org.ua.fkrkm.proglatformdao.entityMongo.Test test = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test")
-                .topicId(1)
-                .questions(questions)
-                .build();
-
-        String uuid = testDao.create(test);
-        assertNotNull(uuid);
+        org.ua.fkrkm.proglatformdao.entity.Test saved = testDao.getById((long) id).get(0);
+        assertEquals("create", saved.getName());
+        assertEquals(2, saved.getQuestions().size());
+        assertEquals(List.of("Option 1", "Option 2", "Option 3"), saved.getQuestions().get(0).getOptions());
     }
 
     @Test
-    public void getAllTest() {
-        Question question = Question.builder()
-                .question("Test 1")
-                .correctAnswer("Test 1")
-                .options(List.of("Option 1", "Option 2", "Option 3"))
+    public void updateTest() {
+        long id = testDao.create(newTest("update", 1L));
+
+        org.ua.fkrkm.proglatformdao.entity.Test updated = org.ua.fkrkm.proglatformdao.entity.Test.builder()
+                .id(id)
+                .name("updated")
+                .topicId(2L)
+                .questions(List.of(Question.builder()
+                        .question("New question")
+                        .correctAnswer("A")
+                        .options(List.of("A", "B"))
+                        .build()))
+                .updated(new Date())
                 .build();
 
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
+        assertEquals(1, testDao.update(updated));
 
-        org.ua.fkrkm.proglatformdao.entityMongo.Test test = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test")
-                .topicId(1)
-                .questions(questions)
+        org.ua.fkrkm.proglatformdao.entity.Test saved = testDao.getById(id).get(0);
+        assertEquals("updated", saved.getName());
+        assertEquals(2L, saved.getTopicId());
+        assertEquals(1, saved.getQuestions().size());
+        assertEquals("New question", saved.getQuestions().get(0).getQuestion());
+    }
+
+    @Test
+    public void updateWithoutQuestionsKeepsQuestionsTest() {
+        long id = testDao.create(newTest("keep", 1L));
+
+        org.ua.fkrkm.proglatformdao.entity.Test updated = org.ua.fkrkm.proglatformdao.entity.Test.builder()
+                .id(id)
+                .name("keep updated")
+                .topicId(1L)
+                .updated(new Date())
                 .build();
 
-        testDao.create(test);
-        List<org.ua.fkrkm.proglatformdao.entityMongo.Test> tests = testDao.getAll();
+        assertEquals(1, testDao.update(updated));
+        assertEquals(2, testDao.getById(id).get(0).getQuestions().size());
+    }
+
+    @Test
+    public void getByIdTest() {
+        List<org.ua.fkrkm.proglatformdao.entity.Test> tests = testDao.getById(1L);
+
         assertEquals(1, tests.size());
+        assertEquals("Pointers basics", tests.get(0).getName());
+        assertEquals(3, tests.get(0).getQuestions().size());
+        assertEquals(List.of("&", "*", "->", "::"), tests.get(0).getQuestions().get(0).getOptions());
     }
 
     @Test
-    public void getByUUIDTest() {
-        Question question = Question.builder()
-                .question("Test 1")
-                .correctAnswer("Test 1")
-                .options(List.of("Option 1", "Option 2", "Option 3"))
-                .build();
-
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
-
-        org.ua.fkrkm.proglatformdao.entityMongo.Test test = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test")
-                .topicId(1)
-                .questions(questions)
-                .build();
-
-        String uuid = testDao.create(test);
-        org.ua.fkrkm.proglatformdao.entityMongo.Test testDaoById = testDao.getByUUID(uuid);
-        assertNotNull(testDaoById);
+    public void getByIdNotFoundTest() {
+        assertTrue(testDao.getById(-1L).isEmpty());
     }
 
     @Test
     public void getByTopicIdTest() {
+        List<org.ua.fkrkm.proglatformdao.entity.Test> tests = testDao.getByTopicId(2L);
 
-        Question question = Question.builder()
-                .question("Test 1")
-                .correctAnswer("Test 1")
-                .options(List.of("Option 1", "Option 2", "Option 3"))
-                .build();
+        assertTrue(tests.size() >= 2);
+        tests.forEach(test -> {
+            assertEquals(2L, test.getTopicId());
+            assertFalse(test.getQuestions().isEmpty());
+        });
+    }
 
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
+    @Test
+    public void getAllTest() {
+        List<org.ua.fkrkm.proglatformdao.entity.Test> tests = testDao.getAll();
 
-        org.ua.fkrkm.proglatformdao.entityMongo.Test firstTest = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test")
-                .topicId(1)
-                .questions(questions)
-                .build();
-
-        org.ua.fkrkm.proglatformdao.entityMongo.Test secondTest = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test 2")
-                .topicId(1)
-                .questions(questions)
-                .build();
-
-        testDao.create(firstTest);
-        testDao.create(secondTest);
-
-
-        assertFalse(testDao.getByTopicId(1).isEmpty());
-        assertEquals(2, testDao.getByTopicId(1).size());
+        assertTrue(tests.size() >= 3);
+        tests.forEach(test -> assertFalse(test.getQuestions().isEmpty()));
     }
 
     @Test
     public void deleteTest() {
-        Question question = Question.builder()
-                .question("Test 1")
-                .correctAnswer("Test 1")
-                .options(List.of("Option 1", "Option 2", "Option 3"))
-                .build();
+        long id = testDao.create(newTest("delete", 1L));
 
-        List<Question> questions = new ArrayList<>();
-        questions.add(question);
-
-        org.ua.fkrkm.proglatformdao.entityMongo.Test test = org.ua.fkrkm.proglatformdao.entityMongo.Test.builder()
-                .name("test")
-                .topicId(1)
-                .questions(questions)
-                .build();
-
-        String uuid = testDao.create(test);
-
-        testDao.delete(uuid);
-        org.ua.fkrkm.proglatformdao.entityMongo.Test testDaoById = testDao.getByUUID(uuid);
-        assertNull(testDaoById);
+        assertEquals(1, testDao.delete(id));
+        assertTrue(testDao.getById(id).isEmpty());
     }
 }

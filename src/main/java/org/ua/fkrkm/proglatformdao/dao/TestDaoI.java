@@ -1,57 +1,18 @@
 package org.ua.fkrkm.proglatformdao.dao;
 
-import org.ua.fkrkm.proglatformdao.entityMongo.Test;
+import org.ua.fkrkm.proglatformdao.entity.Test;
 
 import java.util.List;
 
 /**
- * Інтерфейс для роботи з документом "Тест"
+ * Інтерфейс для роботи з сутністю "Тест". Разом з тестом зберігаються та завантажуються його питання
  */
-public interface TestDaoI {
+public interface TestDaoI extends ParentDaoI<Test> {
     /**
-     * Створити документ в базі
-     *
-     * @param entity сутність для зберігання
-     * @return String UUID створеного запису
-     */
-    String create(Test entity);
-    /**
-     * Оновлення документа в базы
-     *
-     * @param entity сутність для оновлення
-     */
-    void update(Test entity);
-    /**
-     * Отримати документ по UUID
-     *
-     * @param uuid UUID документа в базі
-     * @return Test запис з бази
-     */
-    Test getByUUID(String uuid);
-    /**
-     * Отримати тест по ID теми
+     * Отримати тести по ID теми
      *
      * @param topicId ID теми
-     * @return List<Test> запис з бази
+     * @return List<Test> тести теми разом з питаннями
      */
-    List<Test> getByTopicId(Integer topicId);
-    /**
-     * Отримати тест по списку ID тем
-     *
-     * @param topicIds список ID тем
-     * @return List<Test> запис з бази
-     */
-    List<Test> getByTopicIds(List<Integer> topicIds);
-    /**
-     * Отримати всі документи з бази
-     *
-     * @return List<Test> записи з бази
-     */
-    List<Test> getAll();
-    /**
-     * Видалити документ з бази
-     *
-     * @param uuid UUID документа в базі
-     */
-    void delete(String uuid);
+    List<Test> getByTopicId(Long topicId);
 }

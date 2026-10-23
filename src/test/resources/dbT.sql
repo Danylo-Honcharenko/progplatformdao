@@ -72,6 +72,26 @@ CREATE TABLE IF NOT EXISTS `answers_to_exercise` (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS `test` (
+    `id` SERIAL PRIMARY KEY,
+    `name` VARCHAR(100),
+    `topic_id` INT,
+    `created` TIMESTAMP,
+    `updated` TIMESTAMP,
+    FOREIGN KEY (topic_id) REFERENCES topics(id)
+);
+
+CREATE TABLE IF NOT EXISTS `question` (
+    `id` SERIAL PRIMARY KEY,
+    `test_id` INT,
+    `question` TEXT,
+    `correct_answer` TEXT,
+    `options` JSONB,
+    `created` TIMESTAMP,
+    `updated` TIMESTAMP,
+    FOREIGN KEY (test_id) REFERENCES test(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `test_result` (
     `id` SERIAL PRIMARY KEY,
     `test_uuid` VARCHAR(255),
@@ -163,6 +183,43 @@ VALUES ('Deploy APP', 'This is...', '2024-05-12 09:12:44', 1);
 
 INSERT INTO exercises (name, description, created, topic_id)
 VALUES ('Deploy APP 2', 'This is...', '2024-05-12 09:12:44', 2);
+
+INSERT INTO test (name, topic_id, created)
+VALUES ('Pointers basics', 1, '2024-05-12 09:12:44');
+
+INSERT INTO test (name, topic_id, created)
+VALUES ('Variables and data types', 2, '2024-05-12 09:12:44');
+
+INSERT INTO test (name, topic_id, created)
+VALUES ('Python variables quiz', 2, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (1, 'Який оператор повертає адресу змінної в C++?', '&',
+        '["&", "*", "->", "::"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (1, 'Який оператор використовується для розіменування вказівника?', '*',
+        '["&", "*", "++", "%"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (1, 'Яке значення має порожній вказівник у сучасному C++?', 'nullptr',
+        '["nullptr", "void", "0x1", "undefined"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (2, 'Який тип використовується для цілих чисел у C++?', 'int',
+        '["int", "float", "char", "bool"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (2, 'Який розмір у байтах зазвичай має тип char?', '1',
+        '["1", "2", "4", "8"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (3, 'Яка функція у Python повертає тип змінної?', 'type()',
+        '["type()", "typeof()", "class()", "kind()"]' FORMAT JSON, '2024-05-12 09:12:44');
+
+INSERT INTO question (test_id, question, correct_answer, options, created)
+VALUES (3, 'Чи потрібно оголошувати тип змінної у Python?', 'Ні',
+        '["Так", "Ні"]' FORMAT JSON, '2024-05-12 09:12:44');
 
 INSERT INTO test_result (test_uuid, user_id, max_assessment, assessment, correct, incorrect, created)
 VALUES ('oioe79kd90s68n5793', 1, 100, 50, '{"test": "ok!"}', '{}','2024-04-12 09:12:44');

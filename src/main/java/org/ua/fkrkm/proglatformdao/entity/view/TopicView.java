@@ -3,7 +3,7 @@ package org.ua.fkrkm.proglatformdao.entity.view;
 import lombok.Builder;
 import lombok.Data;
 import org.ua.fkrkm.proglatformdao.entity.Exercise;
-import org.ua.fkrkm.proglatformdao.entityMongo.view.TestView;
+// import org.ua.fkrkm.proglatformdao.entityMongo.view.TestView;
 
 import java.util.Date;
 import java.util.List;
@@ -23,8 +23,8 @@ public class TopicView {
     private Long moduleId;
     // Статус виконання теми
     private Boolean done;
-    // Тести
-    private List<TestView> tests;
+    // Тести (MongoDB вимкнено)
+    // private List<TestView> tests;
     // Завдання
     private Exercise exercise;
     // Час створення
