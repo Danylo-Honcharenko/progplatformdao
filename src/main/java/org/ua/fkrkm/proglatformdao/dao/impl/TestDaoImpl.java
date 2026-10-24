@@ -47,10 +47,10 @@ public class TestDaoImpl extends ParentDaoImpl<Test> implements TestDaoI {
      * {@inheritDoc}
      */
     @Override
-    public int create(Test entity) {
+    public Long create(Test entity) {
         return inTransaction(() -> {
-            int id = super.create(entity);
-            insertQuestions((long) id, entity.getQuestions());
+            Long id = super.create(entity);
+            insertQuestions(id, entity.getQuestions());
             return id;
         });
     }

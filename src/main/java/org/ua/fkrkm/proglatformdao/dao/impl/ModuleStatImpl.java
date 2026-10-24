@@ -1,7 +1,10 @@
 package org.ua.fkrkm.proglatformdao.dao.impl;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.ua.fkrkm.proglatformdao.dao.ModuleStatDaoI;
 import org.ua.fkrkm.proglatformdao.entity.ModuleStat;
 import org.ua.fkrkm.proglatformdao.entity.view.ModuleStateView;
@@ -11,6 +14,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Клас для роботи з сутністю "Статистика по модулю"
@@ -29,6 +33,21 @@ public class ModuleStatImpl extends ParentDaoImpl<ModuleStat> implements ModuleS
         setValues("module_id, topic_id, user_id");
         setValuesForUpdate("module_id = :moduleId, topic_id = :topicId, user_id = :userId");
         setRowMapper(new ModuleCompleteMapper());
+    }
+
+    /**
+     * {@inheritDoc}
+     * Якщо запис для пари (topic_id, user_id) вже існує, новий не створюється і повертається null
+     */
+    @Override
+    public Long create(ModuleStat entity) {
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(entity);
+        String sql = "INSERT INTO " + this.tableName + " (" + super.getValues() + ") VALUES (" + super.getParam() + ") ON CONFLICT DO NOTHING;";
+        this.namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder, new String[]{"id"});
+        // При конфлікті ключ не генерується
+        Number key = keyHolder.getKey();
+        return Objects.isNull(key) ? null : key.longValue();
     }
 
 

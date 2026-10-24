@@ -1,5 +1,6 @@
 package org.ua.fkrkm.proglatformdao.dao.impl;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,9 +29,11 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
     protected String tableName;
     // Параметри замісить яких буде підставлено значення
     @Setter
+    @Getter
     private String param;
     // Всі поля запису
     @Setter
+    @Getter
     private String values;
     // Зіставлені поля запису та параметри
     @Setter
@@ -55,7 +58,7 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
      * {@inheritDoc}
      */
     @Override
-    public int create(T entity) {
+    public Long create(T entity) {
         // Об'єкт для зберігання згенерованого ключа
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         // Підставляємо параметри в запит (наприк. замість :name "Jack")
@@ -65,7 +68,7 @@ public class ParentDaoImpl<T> implements ParentDaoI<T> {
         // Робимо запит
         namedParameterJdbcTemplate.update(sql, sqlParameterSource, keyHolder, new String[]{"id"});
         // Повертаємо ключ створенного запису та перевіряємо, щоб він був присутній
-        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+        return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
     /**

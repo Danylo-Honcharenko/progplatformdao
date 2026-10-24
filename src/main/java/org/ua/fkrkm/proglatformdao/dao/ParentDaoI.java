@@ -12,9 +12,9 @@ public interface ParentDaoI<T> {
      * Створити запис
      *
      * @param entity сутність
-     * @return int ID створеного запису в базі
+     * @return Long ID створеного запису в базі
      */
-    int create(T entity);
+    Long create(T entity);
     /**
      * Оновити запис
      *

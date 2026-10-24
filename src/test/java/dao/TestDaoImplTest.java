@@ -45,11 +45,11 @@ public class TestDaoImplTest {
 
     @Test
     public void createTest() {
-        int id = testDao.create(newTest("create", 1L));
+        long id = testDao.create(newTest("create", 1L));
 
         assertTrue(id > 0);
 
-        org.ua.fkrkm.proglatformdao.entity.Test saved = testDao.getById((long) id).get(0);
+        org.ua.fkrkm.proglatformdao.entity.Test saved = testDao.getById(id).get(0);
         assertEquals("create", saved.getName());
         assertEquals(2, saved.getQuestions().size());
         assertEquals(List.of("Option 1", "Option 2", "Option 3"), saved.getQuestions().get(0).getOptions());
